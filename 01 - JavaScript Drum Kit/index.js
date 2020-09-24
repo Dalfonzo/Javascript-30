@@ -13,6 +13,7 @@ function playSound(e) {
 
   for (let item of audios) {
     if (item.dataset.key == e.keyCode) {
+      item.currentTime = 0;
       item.play();
     }
   }
