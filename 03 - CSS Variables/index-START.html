@@ -50,7 +50,7 @@
       img {
         padding: var(--spacing);
         background: var(--base);
-        --blur: 10px;
+        filter: blur(var(--blur));
       }
 
       body {
@@ -82,7 +82,7 @@
       });
 
       blurRange.addEventListener('input', (e) => {
-        root.style.setProperty('--blur', `blur(${e.target.value}px)`);
+        root.style.setProperty('--blur', `${e.target.value}px`);
       });
 
       baseColor.addEventListener('input', (e) => {
