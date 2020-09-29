@@ -16,20 +16,46 @@
     <script>
       const endpoint =
         'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
-
       const inputVal = document.querySelector('.search');
-      inputVal.addEventListener('keyup', (e) => {
-        console.log(e.target.value);
-      });
 
-      console.log(inputVal);
-
-      const data = fetch(endpoint)
-        .then((response) => response.json())
-        .then((data) => {
-          // console.log(data);
-          // const filtered = data.filter((el) => console.log(el));
+      function filterCities(data) {
+        data.forEach((element) => {
+          const newElement = document.createElement('li');
+          newElement.textContent = element.city;
+          document.querySelector('.suggestions').appendChild(newElement);
         });
+      }
+
+      async function fetchData() {
+        const data = await fetch(endpoint);
+        console.log(data)
+
+        inputVal.addEventListener('keyup', (e) => {
+          const filtered = data.filter((el) =>
+            el.city.toLowerCase().includes(e.target.value.toLowerCase())
+          );
+          document.querySelector('.suggestions').textContent = '';
+
+          filterCities(filtered);
+        });
+      }
+
+      fetchData();
+      fetch(endpoint)
+        .then((response) => response.json())
+      //   .then((data) => {
+      //     inputVal.addEventListener('keyup', (e) => {
+      //       const filtered = data.filter((el) =>
+      //         el.city.toLowerCase().includes(e.target.value.toLowerCase())
+      //       );
+      //       document.querySelector('.suggestions').textContent = '';
+      //       filtered.forEach((element) => {
+      //         const newElement = document.createElement('li');
+      //         newElement.textContent = element.city;
+      //         document.querySelector('.suggestions').appendChild(newElement);
+      //       });
+      //     });
+      //   });
     </script>
   </body>
 </html>
